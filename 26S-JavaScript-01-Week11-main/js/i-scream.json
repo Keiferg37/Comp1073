@@ -1,0 +1,42 @@
+{
+    "companyName": "I-Scream Company Inc.",
+    "headOffice": "North Pole",
+    "established": 2026,
+    "active": true,
+    "topFlavours": [{
+        "name": "Chocolate Mint",
+        "calories": 200,
+        "type": "ice-cream",
+        "ingredients": ["Chocolate Syrup", "Peppermint Sprinkle", "Vanilla Base"],
+        "image": "images/chocolate-mint.svg",
+        "rating": 4.6
+    }, {
+        "name": "Peach Mango",
+        "calories": 240,
+        "type": "milkshake-type ice-cream",
+        "ingredients": ["Peach Syrup", "Mango Chunks", "Vanilla Base"],
+        "image": "images/peach-mango.svg",
+        "rating": 4.2
+    }, {
+        "name": "Strawberry Sprinkle",
+        "calories": 220,
+        "type": "ice-cream",
+        "ingredients": ["Strawberry Syrup", "Strawberry Chunks", "Sprinkle", "Chocolate Base"],
+        "image": "images/strawberry-sprinkle.svg",
+        "rating": 4.8
+    }, {
+        "name": "Cookies and Cream",
+        "calories": 260,
+        "type": "ice-cream",
+        "ingredients": ["Chocolate Cookie Crumble", "Cream Swirl", "Vanilla Base"],
+        "image": "images/ice-cream-xtra1.svg",
+        "rating": 4.9
+    }, {
+        "name": "Salted Caramel",
+        "calories": 250,
+        "type": "gelato-style ice-cream",
+        "ingredients": ["Caramel Swirl", "Sea Salt Flakes", "Butterscotch Chips", "Cream Base"],
+        "image": "images/ice-cream-xtra2.svg",
+        "rating": 4.5
+    }]
+}
