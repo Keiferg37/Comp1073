@@ -19,3 +19,40 @@ header {
 h1 {
     color: #c62828;
 }
+
+/* ===== Form layout ===== */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #bcaaa4;
+    border-radius: 5px;
+}
+
+fieldset {
+    margin-top: 12px;
+    border: 1px solid #bcaaa4;
+    border-radius: 5px;
+}
+
+legend {
+    font-weight: bold;
+}
