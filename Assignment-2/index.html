@@ -17,7 +17,16 @@
     </header>
 
     <main>
-        
+        <!-- Pizza order form. novalidate lets our JS control the messages -->
+        <form id="pizza-form" novalidate>
+            <!-- Customer name -->
+            <div class="field">
+                <label for="customer">Your Name</label>
+                <input type="text" id="customer" name="customer" required
+                       minlength="2" placeholder="e.g. Alex Smith" />
+            </div>
+            
+        </form>
     </main>
 </body>
 </html>
