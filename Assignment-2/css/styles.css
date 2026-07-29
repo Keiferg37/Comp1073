@@ -99,6 +99,12 @@ fieldset label {
     color: #2e7d32;
 }
 
+/* ===== Buttons ===== */
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
 
 button {
     flex: 1;
@@ -110,7 +116,6 @@ button {
     color: #ffffff;
 }
 
-/* ===== Buttons ===== */
 button[type="submit"] {
     background-color: #c62828;
 }
