@@ -173,3 +173,32 @@ form.addEventListener("submit", function (event) {
     output.appendChild(pricePara);
     output.classList.add("show");
 });
+
+// STEP 7: "Surprise Me" button (CREATIVE + TECHNICAL extra)
+// Randomly fills the form so the user can order in one click.
+document.querySelector("#surprise").addEventListener("click", function () {
+    // Random name from a small list
+    const names = ["Alex", "Sam", "Jordan", "Casey", "Riley"];
+    document.querySelector("#customer").value =
+        names[Math.floor(Math.random() * names.length)];
+
+    // Random size
+    const sizes = document.querySelectorAll("input[name='size']");
+    sizes[Math.floor(Math.random() * sizes.length)].checked = true;
+
+    // Random crust (skip index 0, which is the empty placeholder)
+    const crust = document.querySelector("#crust");
+    crust.selectedIndex = 1 + Math.floor(Math.random() * (crust.options.length - 1));
+
+    // Randomly tick each topping about half the time
+    const toppings = document.querySelectorAll("input[name='topping']");
+    toppings.forEach(function (box) {
+        box.checked = Math.random() < 0.5;
+    });
+
+    // Random quantity from 1 to 3
+    document.querySelector("#quantity").value = 1 + Math.floor(Math.random() * 3);
+
+    // Refresh the live total after filling the form
+    updateLiveTotal();
+});
