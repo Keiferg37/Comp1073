@@ -103,3 +103,22 @@ function readForm() {
         notes: notes
     };
 }
+
+// STEP 5: Live running total (TECHNICAL extra)
+// Recalculates whenever the user changes anything on the form.
+function updateLiveTotal() {
+    const data = readForm();
+    // We need a size and quantity to show a meaningful total
+    if (data.size === "" || data.quantity < 1) {
+        liveTotal.textContent = "$0.00";
+        return;
+    }
+    const preview = new Pizza(
+        data.customer, data.size, data.crust,
+        data.toppings, data.quantity, data.notes
+    );
+    liveTotal.textContent = "$" + preview.calculatePrice().toFixed(2);
+}
+// "input" and "change" fire as the user edits the form
+form.addEventListener("input", updateLiveTotal);
+form.addEventListener("change", updateLiveTotal);
