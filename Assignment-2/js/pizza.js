@@ -71,3 +71,35 @@ class Pizza {
         return description;
     }
 }
+
+// STEP 4: Grab the elements we will reuse
+const form = document.querySelector("#pizzaForm");
+const errorBox = document.querySelector("#error");
+const output = document.querySelector("#output");
+const liveTotal = document.querySelector("#liveTotal");
+
+// Helper: read the current form values and return them
+function readForm() {
+    const customer = document.querySelector("#customer").value.trim();
+    const sizeInput = document.querySelector("input[name='size']:checked");
+    const crust = document.querySelector("#crust").value;
+    const quantity = Number(document.querySelector("#quantity").value);
+    const notes = document.querySelector("#notes").value.trim();
+
+    // Collect every checked topping into an array
+    const toppingInputs = document.querySelectorAll("input[name='topping']:checked");
+    let toppings = [];
+    for (let i = 0; i < toppingInputs.length; i++) {
+        toppings.push(toppingInputs[i].value);
+    }
+
+    // Return everything as one object
+    return {
+        customer: customer,
+        size: sizeInput ? sizeInput.value : "",
+        crust: crust,
+        toppings: toppings,
+        quantity: quantity,
+        notes: notes
+    };
+}
