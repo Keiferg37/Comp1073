@@ -5,7 +5,7 @@
    ============================================================ */
 
 // STEP 1: Dynamically add the student id and name to the page
-const student = document.querySelector("#student");
+const student = document.querySelector("#student-info");
 student.textContent = "Keifer Grainger | Student ID: 200488755";
 
 // STEP 2: Show a random chef tip (small creative touch)
@@ -34,7 +34,7 @@ class Pizza {
     // METHOD 1: work out the total price of the order
     calculatePrice() {
         // Base price depends on the size
-        const sizePrices = { "Small": 8, "Medium": 11, "Large": 14 };
+        const sizePrices = { "Small": 8, "Medium": 12, "Large": 16 };
         let price = sizePrices[this.size];
 
         // Some crusts cost extra
@@ -73,7 +73,7 @@ class Pizza {
 }
 
 // STEP 4: Grab the elements we will reuse
-const form = document.querySelector("#pizzaForm");
+const form = document.querySelector("#pizza-form");
 const errorBox = document.querySelector("#error");
 const output = document.querySelector("#output");
 const liveTotal = document.querySelector("#liveTotal");
