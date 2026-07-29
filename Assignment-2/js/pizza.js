@@ -10,7 +10,7 @@ student.textContent = "Keifer Grainger | Student ID: 200488755";
 
 // STEP 2: Show a random chef tip (small creative touch)
 const chefTips = [
-    "Tip: Stuffed crust is Chef Tony's favourite!",
+    "Tip: Stuffed crust is Chef Keifer's favourite!",
     "Tip: Pineapple on pizza? We don't judge. 🍍",
     "Tip: Extra cheese makes everything better.",
     "Tip: Order two — future you will say thanks."
