@@ -131,3 +131,38 @@ button[type="submit"]:hover {
 #surprise:hover {
     background-color: #b53d00;
 }
+
+/* ===== Messages and output ===== */
+.error {
+    max-width: 500px;
+    margin: 10px auto;
+    color: #b71c1c;
+    font-weight: bold;
+    text-align: center;
+}
+
+#output {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff8e1;
+    border: 2px dashed #c62828;
+    border-radius: 10px;
+    /* Hidden until there is an order to show (added by JS) */
+    display: none;
+}
+
+#output.show {
+    display: block;
+}
+
+#output h2 {
+    margin-top: 0;
+    color: #c62828;
+}
+
+.price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #2e7d32;
+}
