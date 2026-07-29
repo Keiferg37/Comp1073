@@ -18,3 +18,56 @@ const chefTips = [
 // Math.floor + Math.random picks a random index from the array
 const tipIndex = Math.floor(Math.random() * chefTips.length);
 document.querySelector("#chefTip").textContent = chefTips[tipIndex];
+
+// STEP 3: The Pizza class (Object Oriented Programming)
+class Pizza {
+    // The constructor stores the values captured from the form
+    constructor(customer, size, crust, toppings, quantity, notes) {
+        this.customer = customer;
+        this.size = size;
+        this.crust = crust;
+        this.toppings = toppings; // an array of topping strings
+        this.quantity = quantity;
+        this.notes = notes;
+    }
+
+    // METHOD 1: work out the total price of the order
+    calculatePrice() {
+        // Base price depends on the size
+        const sizePrices = { "Small": 8, "Medium": 11, "Large": 14 };
+        let price = sizePrices[this.size];
+
+        // Some crusts cost extra
+        if (this.crust === "Stuffed" || this.crust === "Gluten-Free") {
+            price += 2;
+        }
+
+        // Each topping is $1
+        price += this.toppings.length * 1;
+
+        // Multiply by how many pizzas were ordered
+        price = price * this.quantity;
+
+        return price;
+    }
+
+    // METHOD 2: build and return the order description as a string
+    describe() {
+        // If no toppings were chosen, say "plain cheese"
+        let toppingText = this.toppings.length > 0
+            ? this.toppings.join(", ")
+            : "plain cheese";
+
+        // Build the description string piece by piece
+        let description = `Thanks ${this.customer}! Your order: `;
+        description += `${this.quantity} x ${this.size} ${this.crust}-crust pizza `;
+        description += `with ${toppingText}.`;
+
+        // Add special instructions only if the customer typed some
+        if (this.notes !== "") {
+            description += ` Note: ${this.notes}`;
+        }
+
+        return description;
+    }
+}
