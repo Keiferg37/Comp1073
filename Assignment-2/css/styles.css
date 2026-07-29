@@ -84,3 +84,17 @@ fieldset {
 legend {
     font-weight: bold;
 }
+
+/* Checkboxes and radios sit inline with their text */
+fieldset label {
+    font-weight: normal;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.live-total {
+    margin-top: 16px;
+    font-weight: bold;
+    text-align: right;
+    color: #2e7d32;
+}
