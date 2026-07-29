@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>The Pizza Maker | COMP1073</title>
+    <title>The Pizza Maker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Link the stylesheet and script (defer waits until HTML is parsed) -->
     <link href="css/styles.css" rel="stylesheet" />
@@ -12,11 +12,15 @@
 <body>
     <header>
         <h1>The Pizza Maker</h1>
+        <p class="tagline">Chef Keifer is ready to build your perfect pie!</p>
         <!-- Student Info -->
         <p id="student-info">Keifer Grainger - 200488755</p>
     </header>
 
     <main>
+        <!-- Rotating chef tip (updated by JavaScript for a fun touch) -->
+        <p id="chefTip" class="chef-tip"></p>
+
         <!-- Pizza order form. novalidate lets our JS control the messages -->
         <form id="pizza-form" novalidate>
             <!-- Customer name -->
@@ -26,9 +30,9 @@
             <!-- Size (radio buttons) -->
             <fieldset>
                 <legend>Size</legend>
-                <label><input type="radio" name="size" value="Small" required /> Small</label>
-                <label><input type="radio" name="size" value="Medium" /> Medium</label>
-                <label><input type="radio" name="size" value="Large" /> Large</label>
+                <label><input type="radio" name="size" value="Small" required /> Small ($8)</label>
+                <label><input type="radio" name="size" value="Medium" /> Medium ($12)</label>
+                <label><input type="radio" name="size" value="Large" /> Large ($16)</label>
             </fieldset>
 
             <!-- Crust (dropdown) -->
@@ -37,13 +41,13 @@
                 <option value="">-- Choose a crust --</option>
                 <option value="Thin">Thin</option>
                 <option value="Thick">Thick</option>
-                <option value="Stuffed">Stuffed</option>
-                <option value="Gluten-Free">Gluten-Free</option>
+                <option value="Stuffed">Stuffed (+$2)</option>
+                <option value="Gluten-Free">Gluten-Free (+$2)</option>
             </select>
 
             <!-- Toppings (checkboxes) -->
             <fieldset>
-                <legend>Toppings</legend>
+                <legend>Toppings ($1 each)</legend>
                 <label><input type="checkbox" name="topping" value="Pepperoni" /> Pepperoni</label>
                 <label><input type="checkbox" name="topping" value="Mushrooms" /> Mushrooms</label>
                 <label><input type="checkbox" name="topping" value="Onions" /> Onions</label>
@@ -60,10 +64,27 @@
             <label for="notes">Special Instructions (optional)</label>
             <textarea id="notes" name="notes" rows="3"></textarea>
 
-            <!-- Submit -->
-            <button type="submit">Order</button>
+             <!-- Live running total updates as the user picks options (TECHNICAL extra) -->
+            <p class="live-total">Running total: <span id="liveTotal">$0.00</span></p>
 
+            <!-- Buttons -->
+            <div class="buttons">
+                <button type="submit">Order</button>
+                <!-- Randomly fills the form for fun (CREATIVE + TECHNICAL extra) -->
+                <button type="button" id="surprise">Surprise Me</button>
+            </div>
         </form>
+
+        <!-- Validation errors show here -->
+        <p id="error" class="error"></p>
+
+        <!-- The pizza description from the Pizza method shows here -->
+        <section id="output"></section>
+
     </main>
+
+    <footer>
+        <p>Made by Keifer Grainger for COMP1073</p>
+    </footer>
 </body>
 </html>
