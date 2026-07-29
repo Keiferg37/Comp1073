@@ -122,3 +122,54 @@ function updateLiveTotal() {
 // "input" and "change" fire as the user edits the form
 form.addEventListener("input", updateLiveTotal);
 form.addEventListener("change", updateLiveTotal);
+
+// STEP 6: Handle the form submit (the 'Order' button)
+form.addEventListener("submit", function (event) {
+    event.preventDefault(); // stop the page from reloading
+
+    // Clear any previous messages
+    errorBox.textContent = "";
+    output.classList.remove("show");
+    output.innerHTML = "";
+
+    // Read the current values
+    const data = readForm();
+
+    // VALIDATION — the object is only created if ALL checks pass
+    if (data.customer === "") {
+        errorBox.textContent = "Please enter your name.";
+        return;
+    }
+    if (data.size === "") {
+        errorBox.textContent = "Please choose a pizza size.";
+        return;
+    }
+    if (data.crust === "") {
+        errorBox.textContent = "Please choose a crust.";
+        return;
+    }
+    if (data.quantity < 1 || data.quantity > 20) {
+        errorBox.textContent = "Quantity must be between 1 and 20.";
+        return;
+    }
+
+    // All validation passed — create a Pizza object
+    const myPizza = new Pizza(
+        data.customer, data.size, data.crust,
+        data.toppings, data.quantity, data.notes
+    );
+
+    // Output comes from the object's METHODS, not the raw form values
+    output.innerHTML = "<h2>Your Order</h2>";
+
+    const descPara = document.createElement("p");
+    descPara.textContent = myPizza.describe();
+
+    const pricePara = document.createElement("p");
+    pricePara.className = "price";
+    pricePara.textContent = "Total: $" + myPizza.calculatePrice().toFixed(2);
+
+    output.appendChild(descPara);
+    output.appendChild(pricePara);
+    output.classList.add("show");
+});
