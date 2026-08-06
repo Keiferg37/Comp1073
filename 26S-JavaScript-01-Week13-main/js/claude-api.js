@@ -128,7 +128,7 @@ function sendToClaude(userInput, isFollowup){
         }
 
         // LAB STEP 1: Add Claude's response to the conversation history
-        let reply = json.content[0].text;
+        let reply = json.content.find(block => block.type === "text").text;
         conversationHistory.push({ role: "assistant", content: reply });
 
         // Show this exchange, then reveal the follow-up box
