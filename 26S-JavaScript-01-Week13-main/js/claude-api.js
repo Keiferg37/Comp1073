@@ -28,12 +28,20 @@ const sendMessageBtn = document.querySelector("#send-message");
 const checkUsageBtn = document.querySelector("#check-usage");
 const results = document.querySelector("#results");
 
+// Follow-up section elements
+const followupSection = document.querySelector("#followup-section");
+const followupMessage = document.querySelector("#followup-message");
+const sendFollowupBtn = document.querySelector("#send-followup");
+
 /* STEP 6: Add event listeners for all interactive elements */
 // STEP 6a: Send message button
 sendMessageBtn.addEventListener("click", sendChatMessage);
 
 // STEP 6b: Check usage button
 checkUsageBtn.addEventListener("click", checkTokenUsage);
+
+// STEP 6c: Send follow-up button
+sendFollowupBtn.addEventListener("click", sendFollowupMessage);
 
 /* STEP 7: Create the checkTokenUsage function */
 function checkTokenUsage(){
@@ -72,18 +80,28 @@ function displayStatus(json){
     results.appendChild(pre);
 }
 
-/* STEP 8: Create the sendChatMessage function for Claude API interaction */
+/* STEP 8: Send the FIRST message */
 function sendChatMessage(){
-    // STEP 8a: Get the user's message
     let userInput = userMessage.value;
-
     // LAB STEP 1: Add the user's message to the conversation history
     conversationHistory.push({ role: "user", content: userInput });
+    sendToClaude(userInput, false);   // false = normal reply style
+    userMessage.value = "";
+}
 
-    // STEP 8b: Create complete url
+/* LAB: Send a FOLLOW-UP message using the full conversation */
+function sendFollowupMessage(){
+    let followupInput = followupMessage.value;
+    // LAB STEP 1: Add the follow-up to the conversation history
+    conversationHistory.push({ role: "user", content: followupInput });
+    sendToClaude(followupInput, true);   // true = follow-up reply style
+    followupMessage.value = "";
+}
+
+/* Shared request: sends the FULL conversation to Claude */
+function sendToClaude(userInput, isFollowup){
     let url = `${baseURL}/api/claude/messages`;
 
-    // STEP 8c: Prepare the request body according to Claude API format
     // LAB STEP 1: Send the ENTIRE conversation instead of just the current message
     let body = {
         "model": "claude-sonnet-5",
@@ -91,7 +109,6 @@ function sendChatMessage(){
         "messages": conversationHistory
     }
 
-    // STEP 8d: Make the API request using fetch()
     fetch(url, {
         method: "POST",
         headers: {
@@ -100,42 +117,44 @@ function sendChatMessage(){
         },
         body: JSON.stringify(body)
     })
-    // STEP 8e: Handle the response
-    .then(response => {
-        return response.json();
-    })
+    .then(response => response.json())
     .then(json => {
+        console.log(json); // check this in the console if something is off
+
+        // If the server returned an error instead of a message, show it
+        if (!json.content) {
+            displayMessage(userInput, "ERROR: " + JSON.stringify(json), isFollowup);
+            return;
+        }
+
         // LAB STEP 1: Add Claude's response to the conversation history
         let reply = json.content[0].text;
         conversationHistory.push({ role: "assistant", content: reply });
 
-        // Show this exchange on the page
-        displayMessage(userInput, reply);
-
-        // Clear the textarea so the user can type the next message
-        userMessage.value = "";
+        // Show this exchange, then reveal the follow-up box
+        displayMessage(userInput, reply, isFollowup);
+        followupSection.classList.remove("hidden");
     })
 }
 
 // STEP 8f / LAB STEP 2: Show the conversation in a chat-like format
-function displayMessage(userInput, reply){
+function displayMessage(userInput, reply, isFollowup){
     // The user's message
     let userPara = document.createElement("p"); // <p></p>
     userPara.className = "user-msg";
     userPara.textContent = "You: " + userInput;
 
-    // Claude's reply
+    // Claude's reply — follow-up replies get a distinct style
     let claudePara = document.createElement("p"); // <p></p>
-    claudePara.className = "claude-msg";
+    claudePara.className = isFollowup ? "followup-response" : "claude-msg";
     claudePara.textContent = "Claude: " + reply;
 
-    // Append both so the conversation flow reads top to bottom
     results.appendChild(userPara);
     results.appendChild(claudePara);
 }
 
 // LAB EXTENSION: Multi-Message Chat Feature — COMPLETED
-// LAB STEP 1: sendChatMessage now pushes each user + assistant message into
-//             conversationHistory and sends the full array with every request.
-// LAB STEP 2: displayMessage now shows "You:" and "Claude:" turns separately
-//             (styled via .user-msg and .claude-msg) so the chat flow is clear.
+// LAB STEP 1: Each user + assistant message is pushed into conversationHistory
+//             and the full array is sent with every request (multi-turn).
+// LAB STEP 2: displayMessage shows "You:" and "Claude:" turns; follow-up
+//             replies use .followup-response so they are visually distinct.
