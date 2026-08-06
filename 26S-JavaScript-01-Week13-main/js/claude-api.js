@@ -15,9 +15,12 @@
 // STEP 2: Set the base URL for the Claude API
 const baseURL = "https://georgian.polaristechservices.com";
 // STEP 3: Set your student API key (student ID)
-const studentApiKey = "";
+const studentApiKey = "200488755";
 // STEP 4: Set the maximum tokens for API requests
 const maxTokens = 1000;
+
+// LAB STEP 1: Array that stores the whole conversation (grows with each turn)
+let conversationHistory = [];
 
 /* STEP 5: Reference the DOM elements you'll need to access */
 const userMessage = document.querySelector("#user-message");
@@ -36,7 +39,7 @@ checkUsageBtn.addEventListener("click", checkTokenUsage);
 function checkTokenUsage(){
     // STEP 7a: Create complete url
     let url = `${baseURL}/api/claude/status`;
-    
+
     // STEP 7b: Request status from the API
     fetch(url, {
         headers: {
@@ -56,7 +59,7 @@ function checkTokenUsage(){
 function displayStatus(json){
     console.log(json);
     let pre = document.createElement("pre"); // <pre></pre>
-    
+
     pre.textContent = `Is Enabled: ${json.is_enabled}
     Last Used At: ${json.last_used_at}
     Student ID: ${json.student_id}
@@ -71,23 +74,23 @@ function displayStatus(json){
 
 /* STEP 8: Create the sendChatMessage function for Claude API interaction */
 function sendChatMessage(){
-    // STEP 8a: Get form values
+    // STEP 8a: Get the user's message
     let userInput = userMessage.value;
+
+    // LAB STEP 1: Add the user's message to the conversation history
+    conversationHistory.push({ role: "user", content: userInput });
 
     // STEP 8b: Create complete url
     let url = `${baseURL}/api/claude/messages`;
-    
+
     // STEP 8c: Prepare the request body according to Claude API format
-    // Body: { model: "claude-3-5-sonnet-20241022", max_tokens: 100, messages: [{ role: "user", content: "your message" }] }
+    // LAB STEP 1: Send the ENTIRE conversation instead of just the current message
     let body = {
         "model": "claude-sonnet-5",
         "max_tokens": maxTokens,
-        "messages": [{
-            "role": "user",
-            "content": userInput
-        }]
+        "messages": conversationHistory
     }
-    
+
     // STEP 8d: Make the API request using fetch()
     fetch(url, {
         method: "POST",
@@ -102,28 +105,37 @@ function sendChatMessage(){
         return response.json();
     })
     .then(json => {
-        displayMessage(json);
+        // LAB STEP 1: Add Claude's response to the conversation history
+        let reply = json.content[0].text;
+        conversationHistory.push({ role: "assistant", content: reply });
+
+        // Show this exchange on the page
+        displayMessage(userInput, reply);
+
+        // Clear the textarea so the user can type the next message
+        userMessage.value = "";
     })
 }
 
-// STEP 8f: Extract the message content from Claude's response
-function displayMessage(json){
-    console.log(json);
+// STEP 8f / LAB STEP 2: Show the conversation in a chat-like format
+function displayMessage(userInput, reply){
+    // The user's message
+    let userPara = document.createElement("p"); // <p></p>
+    userPara.className = "user-msg";
+    userPara.textContent = "You: " + userInput;
 
-    let para = document.createElement("p"); // <p></p>
-    para.textContent = json.content[0].text;
-    results.appendChild(para);
+    // Claude's reply
+    let claudePara = document.createElement("p"); // <p></p>
+    claudePara.className = "claude-msg";
+    claudePara.textContent = "Claude: " + reply;
+
+    // Append both so the conversation flow reads top to bottom
+    results.appendChild(userPara);
+    results.appendChild(claudePara);
 }
 
-// LAB EXTENSION: Multi-Message Chat Feature
-// After completing the basic implementation, extend the functionality to support conversation history:
-
-/* LAB STEP 1: Modify sendChatMessage to use conversation history */
-// - Add the user's message to conversationHistory
-// - Send the entire conversation to the API instead of just the current message
-// - Add Claude's response to conversationHistory
-
-/* LAB STEP 2: Update the displayResult function for chat-like appearance */
-// - Show messages in a conversation format
-// - Display user and Claude messages differently
-// - Show conversation flow clearly
+// LAB EXTENSION: Multi-Message Chat Feature — COMPLETED
+// LAB STEP 1: sendChatMessage now pushes each user + assistant message into
+//             conversationHistory and sends the full array with every request.
+// LAB STEP 2: displayMessage now shows "You:" and "Claude:" turns separately
+//             (styled via .user-msg and .claude-msg) so the chat flow is clear.
