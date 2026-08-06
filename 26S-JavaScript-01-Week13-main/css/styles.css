@@ -9,8 +9,30 @@ body {
 	margin-right: auto;
 }
 
-form {
+form,
+#followup-section {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+#followup-section {
+	margin-top: 20px;
+}
+
+.hidden {
+	display: none;
+}
+
+.user-msg {
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.followup-response {
+	background-color: #e3f2fd;
+	border-left: 4px solid #1976d2;
+	margin-left: 20px;
+	padding: 10px;
+	border-radius: 6px;
 }
