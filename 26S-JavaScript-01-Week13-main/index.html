@@ -11,15 +11,23 @@
 
 <body>
 	<h1>Claude AI API Integration</h1>
-	
+
 	<form>
 		<label for="user-message">Your Message:</label>
 		<textarea id="user-message" placeholder="Type your message to Claude..." rows="4"></textarea>
 		<button type="button" id="send-message">Send Message</button>
 		<button type="button" id="check-usage">Check Usage</button>
 	</form>
-	
+
+	<!-- Conversation output appears here -->
 	<section id="results"></section>
+
+	<!-- Follow-up section: hidden until Claude's first reply arrives -->
+	<section id="followup-section" class="hidden">
+		<label for="followup-message">Continue the conversation:</label>
+		<textarea id="followup-message" placeholder="Ask a follow-up..." rows="4"></textarea>
+		<button type="button" id="send-followup">Send Follow-up</button>
+	</section>
 
 	<!-- Proceed to js/claude-api.js for the remainder of the lesson -->
 </body>
